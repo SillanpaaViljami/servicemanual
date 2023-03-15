@@ -6,7 +6,7 @@ namespace EtteplanMORE.ServiceManual.ApplicationCore.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public Int16 Year { get; set; }
+        public short Year { get; set; }
         public string Type { get; set; }
     }
 }

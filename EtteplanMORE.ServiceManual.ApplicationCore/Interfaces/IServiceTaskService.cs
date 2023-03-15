@@ -19,6 +19,6 @@ namespace EtteplanMORE.ServiceManual.ApplicationCore.Interfaces
 
         Task<bool> DeleteTask(int id);
 
-        Task<ServiceTask> UpdateTask(ServiceTask task);
+        Task<ServiceTask> UpdateTask(int id, ServiceTask task);
     }
 }

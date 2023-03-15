@@ -65,8 +65,8 @@ namespace EtteplanMORE.ServiceManual.Web.Controllers
         /// <summary>
         ///     HTTP GET: api/servicetasks/devices/1
         /// </summary>
-        [HttpGet("devices/{deviceId}")]
-        public async Task<IActionResult> GetByDevice(int deviceId)
+        [HttpGet("devices/{id}")]
+        public async Task<IActionResult> GetByDevice([FromQuery] int deviceId)
         {
             var st = await _serviceTaskService.GetByDevice(deviceId);
             if (st == null)
@@ -89,8 +89,8 @@ namespace EtteplanMORE.ServiceManual.Web.Controllers
         /// <summary>
         ///     HTTP POST: api/servicetasks/
         /// </summary>
-        [HttpPost]
-        public async Task<IActionResult> PostServiceTask(ServiceTask task)
+        [HttpPost("{id}")]
+        public async Task<IActionResult> PostServiceTask([FromBody] ServiceTask task)
         {
             if (ModelState.IsValid)
             {
@@ -124,8 +124,8 @@ namespace EtteplanMORE.ServiceManual.Web.Controllers
         /// <summary>
         ///     HTTP DELETE: api/servicetasks/devices/1
         /// </summary>
-        [HttpDelete("devices/{deviceId}")]
-        public async Task<IActionResult> DeleteTaskByDevice(int deviceId)
+        [HttpDelete("devices/{id}")]
+        public async Task<IActionResult> DeleteTaskByDevice([FromQuery] int deviceId)
         {
             if (!await _serviceTaskService.DeleteTaskByDevice(deviceId))
             {
@@ -138,7 +138,7 @@ namespace EtteplanMORE.ServiceManual.Web.Controllers
         ///     HTTP DELETE: api/servicetasks/1
         /// </summary>
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTask(int id)
+        public async Task<IActionResult> DeleteTask([FromQuery] int id)
         {
             if (!await _serviceTaskService.DeleteTask(id))
             {
@@ -148,12 +148,12 @@ namespace EtteplanMORE.ServiceManual.Web.Controllers
         }
 
         /// <summary>
-        ///     HTTP PATCH: api/servicetasks
+        ///     HTTP PATCH: api/servicetasks/1
         /// </summary>
-        [HttpPatch]
-        public async Task<IActionResult> UpdateTask(ServiceTask task)
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> UpdateTask([FromQuery] int id, [FromBody] ServiceTask task)
         {
-            var newSt = await _serviceTaskService.UpdateTask(task);
+            var newSt = await _serviceTaskService.UpdateTask(id, task);
 
             if(newSt == null)
             {

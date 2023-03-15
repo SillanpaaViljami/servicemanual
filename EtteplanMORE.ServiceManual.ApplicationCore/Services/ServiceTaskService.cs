@@ -78,16 +78,16 @@ namespace EtteplanMORE.ServiceManual.ApplicationCore.Services
             return false;
         }
 
-        public async Task<ServiceTask> UpdateTask(ServiceTask task)
+        public async Task<ServiceTask> UpdateTask(int id, ServiceTask task)
         {
-            var st = _context.ServiceTasks.FirstOrDefault(t => t.DeviceId == task.DeviceId);
-            if (st != null && task.DeviceId == st.DeviceId)
+            var st = _context.ServiceTasks.FirstOrDefault(t => t.DeviceId == id);
+            if (st != null)
             {
                 if (task.ServiceCategoryId != ServiceCategory.INVALID)
                 {
                     st.ServiceCategoryId = task.ServiceCategoryId;
                 }
-                if (!String.IsNullOrEmpty(task.Description))
+                if (!string.IsNullOrEmpty(task.Description))
                 {
                     st.Description = task.Description;
                 }

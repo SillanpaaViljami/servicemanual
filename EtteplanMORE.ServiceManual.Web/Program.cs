@@ -5,15 +5,25 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-String connectionString = "Data Source=(local);Initial Catalog=servicemanual;Integrated Security=true";
-builder.Services.AddDbContext<Context>(options => options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<Context>(options
+        => options.UseSqlServer(builder.Configuration.GetConnectionString("ServiceManual")));
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddScoped<IFactoryDeviceService, FactoryDeviceService>();
 builder.Services.AddScoped<IServiceTaskService, ServiceTaskService>();
 
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.UseAuthorization();
 
